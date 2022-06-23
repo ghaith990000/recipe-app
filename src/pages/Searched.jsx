@@ -5,16 +5,16 @@ import {Link} from "react-router-dom";
 function Searched() {
   const [searchedRecipes, setSearchedRecipes] = useState([]); 
   let params = useParams();
-  // const getSearched = async (name) => { 
-  //     const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}&number=9`);
-  //     console.log(data);
-  //     const recipes = await data.json();
-  //     console.log(recipes.results);
-  //     setSearchedRecipes(recipes.results);
-  // };
+  const getSearched = async (name) => { 
+      const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}&number=9`);
+      console.log(data);
+      const recipes = await data.json();
+      console.log(recipes.results);
+      setSearchedRecipes(recipes.results);
+  };
 
   useEffect(() => {
-    // getSearched(params.search);
+    getSearched(params.search);
   }, [params.search]);
 
 

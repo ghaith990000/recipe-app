@@ -1,8 +1,10 @@
-import React, {  useState, useEffect, useCallback } from 'react';
+import React, {  useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+
 // const data = {recipes: [
 //     {
 //         id: 1, 
@@ -33,9 +35,12 @@ import {Link} from 'react-router-dom'
 // ]};
 
 function Popular() {
+    const isMobile = useMediaQuery({
+        query: '(max-width: 800px )'
+    });
     const [popular, setPopular] = useState([]);
 
-    const getPopular = useCallback(async (ignore) => {
+    const getPopular = async (ignore) => {
         const check = localStorage.getItem('popular');
 
         if(check){
@@ -48,12 +53,12 @@ function Popular() {
             setPopular(data.recipes);
             console.log(popular);
         }
-    });
+    }
     
     useEffect(() => {
         getPopular();
         // setPopular(popular);
-    }, [getPopular]);
+    }, []);
 
     
 
@@ -64,7 +69,7 @@ function Popular() {
             <h3>Popular Picks</h3>
 
             <Splide options={{
-                perPage: 4,
+                perPage: (isMobile ? 1 : 3),
                 arrows: false,
                 pagination: false,
                 drag: 'free',

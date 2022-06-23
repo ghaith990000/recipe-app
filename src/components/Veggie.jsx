@@ -4,9 +4,17 @@ import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import {Link} from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive';
 
 
 function Veggie() {
+    
+    const isMobile = useMediaQuery({
+        query: '(max-width: 800px )'
+    });
+
+
+
     // const data = {recipes: [
     //     {
     //         id: 1, 
@@ -51,19 +59,18 @@ function Veggie() {
             setVeggie(data.recipes);
             console.log(veggie);
         }
-    }
+    };
         
     useEffect(() => {
         getVeggie();
         // setPopular(data.recipes);
-    }, []);
+    },[]);
 
   return (
     <Wrapper>
             <h3>Our Vegetarian Picks</h3>
-
             <Splide options={{
-                perPage: 3,
+                perPage: (isMobile ? 1 : 3 ),
                 arrows: false,
                 pagination: false,
                 drag: 'free',
@@ -83,6 +90,7 @@ function Veggie() {
                 );
             })}
             </Splide>
+            
         </Wrapper>
   )
 }
