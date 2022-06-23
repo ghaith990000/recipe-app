@@ -1,7 +1,8 @@
-import React, {  useState, useEffect } from 'react';
+import React, {  useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import {Link} from 'react-router-dom'
 // const data = {recipes: [
 //     {
 //         id: 1, 
@@ -34,7 +35,7 @@ import '@splidejs/react-splide/css';
 function Popular() {
     const [popular, setPopular] = useState([]);
 
-    const getPopular = async (ignore) => {
+    const getPopular = useCallback(async (ignore) => {
         const check = localStorage.getItem('popular');
 
         if(check){
@@ -47,12 +48,12 @@ function Popular() {
             setPopular(data.recipes);
             console.log(popular);
         }
-    }
+    });
     
     useEffect(() => {
         getPopular();
         // setPopular(popular);
-    }, []);
+    }, [getPopular]);
 
     
 
@@ -73,9 +74,11 @@ function Popular() {
                 return(
                     <SplideSlide key={recipe.id}>
                         <Card>
-                            <p>{recipe.title}</p>
-                            <img src={recipe.image} alt={recipe.title} />
-                            <Gradient />
+                            <Link to={'/recipe/' + recipe.id}>
+                                <p>{recipe.title}</p>
+                                <img src={recipe.image} alt={recipe.title} />
+                                <Gradient />
+                            </Link>
                         </Card>
                     </SplideSlide>
                 );
